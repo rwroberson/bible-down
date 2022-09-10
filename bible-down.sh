@@ -16,7 +16,7 @@ do
 	do
 
 		ref=$(echo "${abbarray[$i]}"$j)
-		$HOME/.scripts/bg2md.rb -ceflr -v ESV $ref | \
+		$HOME/.scripts/bg2md.rb -ceflr -v $1 $ref | \
 		sed 's/^[ \t]*//;s/[ \t]*$//' | \
 		tr '\n' ' ' | \
 		sed 's/###### /\n/g' | \
