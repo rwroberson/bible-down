@@ -6,17 +6,21 @@ bookarray=(Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Ruth "1 Sa
 abbarray=(Ge Exo Lev Num Deu Josh Jdgs Ruth 1Sm 2Sm 1Kgs 2Kgs 1Chr 2Chr Ezra Neh Est Job Psa Prov Eccl SSol Isa Jer Lam Eze Dan Hos Joel Amos Oba Jonah Mic Nah Hab Zep Hag Zec Mac Mtt Mark Luke John Acts Rom 1Cor 2Cor Gal Eph Phi Col 1Th 2Th 1Tim 2Tim Tit Phmn Heb Jas 1Pt 2Pt 1Jn 2Jn 3Jn Jude Rev)
 lengtharray=(50 40 27 36 34 24 21 4 31 24 22 25 29 36 10 13 10 42 150 31 12 8 66 52 5 48 12 14 3 9 1 4 7 3 3 3 2 14 4 28 16 24 21 28 16 16 13 6 6 4 4 5 3 6 4 3 1 13 5 5 3 5 1 1 1 22)
 
+echo "Where would you like to store your Bible? Use $HOME instead of ~ or \$HOME."
+read -ep "(The folder destination will also be the Bible command, e.g, kjv) " dest
+mkdir -vp $dest
+com=$(echo $dest | sed 's#\/$##;s#.*\/##')
+COM=$(echo $com | tr '[:lower:]' '[:upper:]')
+read -p "What Bible translation would you like to use (e.g.; KJV, WEB)? " trans
 
-text=$(mktemp)
+echo "Downloading Bible. This may take a few minutes..."
 
 for ((i=0; i < ${#bookarray[@]}; i++))
 do
-	#echo "${bookarray[$i]}" "${abbarray[$i]}"
+	echo -n "${bookarray[$i]}"
 	for ((j=1; j <= ${lengtharray[$i]}; j++))
 	do
-
-		ref=$(echo "${abbarray[$i]}"$j)
-		$HOME/.scripts/bg2md.rb -ceflr -v $1 $ref | \
+		ruby bg2md.rb -ceflr -v $trans "${abbarray[$i]}"$j | \
 		sed 's/^[ \t]*//;s/[ \t]*$//' | \
 		tr '\n' ' ' | \
 		sed 's/###### /\n/g' | \
@@ -28,7 +32,15 @@ do
 			-v c="$j" \
 			-v n="$(($i+1))" \
 			'{print b"\t"a"\t"n"\t"c"\t"$0}' \
-		>> esv.tsv
-
+		>> $dest/$com.tsv
+		echo -n '.'
 	done
+	echo ""
 done
+
+sed "s/kjv/$com/g;s/KJV/$COM/g" kjv.sh > $dest/$com.sh
+sed "s/kjv/$com/g;s/KJV/$COM/g" kjv.awk > $dest/$com.awk
+sed "s/kjv/$com/g" Makefile > $dest/Makefile
+
+echo "To finish installation:"
+echo "cd $dest && sudo make install"

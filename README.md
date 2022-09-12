@@ -3,3 +3,7 @@ This script can be used alongside [jgclark's BibleGateway-to-Markdown](https://g
 This will not download any Apocryphal books with Bibles that have them, although the script could be easily modified to handle.
 
 NOTE: This has not been tested on non-English translations.
+
+## Usage
+
+
