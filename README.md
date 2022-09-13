@@ -5,12 +5,17 @@ See [Luke Smith's kjv](https://github.com/lukesmithxyz/kjv) for an example.
 
 NOTE: This has not been tested on non-English translations.
 
+## DISCLAIMER
+
+Each Bible translation available on BibleGateway has its own licensing terms.
+As far as I am aware, this script does not violate any terms of service for BibleGateway, but use your discretion when downloading Bibles.
+
 ## Installation
 
 Clone the git repo and make the script executable.
 
 ```shell
-git clone https://github.com/rwroberson/bible-down
+git clone https://github.com/rwroberson/bible-down.git
 cd bible-down
 chmod +x bible-down.sh
 ```
