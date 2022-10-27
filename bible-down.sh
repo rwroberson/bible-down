@@ -4,10 +4,12 @@
 
 echo "Checking dependencies..."
 
-if [[ -z $(which ruby) ]]
+if $(which ruby > /dev/null)
 then
-	echo "Please install the latest version of ruby."
-	echo "sudo pacman -S ruby OR sudo apt-get install ruby-full"
+	:
+else
+	echo "Please install the latest version of ruby." ; exit 0
+fi
 
 if [[ -z $(gem list --local | grep 'net-http') ]]
 then
