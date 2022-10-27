@@ -1,5 +1,53 @@
 #!/bin/bash
 
+# check for dependencies
+
+echo "Checking dependencies..."
+
+if [[ -z $(which ruby) ]]
+then
+	echo "Please install the latest version of ruby."
+	echo "sudo pacman -S ruby OR sudo apt-get install ruby-full"
+
+if [[ -z $(gem list --local | grep 'net-http') ]]
+then
+	read -p "net-http not found. Would you like to install it? (Y/n) " yn
+	case $yn in
+		[Yy]* ) gem install net-http; break;;
+        [Nn]* ) exit;;
+        * ) gem install net-http; break;;
+	esac
+fi
+
+if [[ -z $(gem list --local | grep 'colorize') ]]
+then
+	read -p "colorize not found. Would you like to install it? (Y/n) " yn
+	case $yn in
+		[Yy]* ) gem install colorize; break;;
+        [Nn]* ) exit;;
+        * ) gem install colorize; break;;
+	esac
+fi
+
+if [[ -z $(gem list --local | grep 'optparse') ]]
+then
+	read -p "optparse not found. Would you like to install it? (Y/n) " yn
+	case $yn in
+		[Yy]* ) gem install optparse; break;;
+        [Nn]* ) exit;;
+        * ) gem install optparse; break;;
+	esac
+fi
+
+if [[ -z $(gem list --local | grep 'clipboard') ]]
+then
+	read -p "clipboard not found. Would you like to install it? (Y/n) " yn
+	case $yn in
+		[Yy]* ) gem install clipboard; break;;
+        [Nn]* ) exit;;
+        * ) gem install clipboard; break;;
+	esac
+fi
 # Defining arrays for book names, abbreviations, and lengths
 
 bookarray=(Genesis Exodus Leviticus Numbers Deuteronomy Joshua Judges Ruth "1 Samuel" "2 Samuel" "1 Kings" "2 Kings" "1 Chronicles" "2 Chronicles" Ezra Nehemiah Esther Job Psalms Proverbs Ecclesiastes "Song of Solomon" Isaiah Jeremiah Lamentations Ezekiel Daniel Hosea Joel Amos Obadiah Jonah Micah Nahum Habakkuk Zephaniah Haggai Zechariah Malachi Matthew Mark Luke John Acts Romans "1 Corinthians" "2 Corinthians" Galatians Ephesians Philippians Colossians "1 Thessalonians" "2 Thessalonians" "1 Timothy" "2 Timothy" Titus Philemon Hebrews James "1 Peter" "2 Peter" "1 John" "2 John" "3 John" Jude Revelation)
